@@ -1,0 +1,30 @@
+{
+
+
+  "entryFile": "lib/app.ts",
+  "noImplicitAdditionalProperties": "silently-remove-extras",
+  "controllerPathGlobs": ["lib/**/*controller.ts"],
+  "spec": {
+    "host": "localhost:4000",
+    "info": {
+      "description": "",
+      "version": "1.0.0",
+      "title": "angular-typescript-starter"
+    },
+    "schemes": [ "http" ],
+    "outputDirectory": "lib/swagger",
+    "specVersion": 3,
+    "securityDefinitions": {
+      "bearerAuth": {
+        "type": "apiKey",
+        "name": "authorization",
+        "in": "header"
+      }
+    }
+  },
+  "routes": {
+    "routesDir": "lib/routes",
+    "entryFile": "lib/app.ts",
+    "authenticationModule": "lib/middleware/authentication.ts"
+  }
+}
