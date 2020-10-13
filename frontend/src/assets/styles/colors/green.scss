@@ -1,0 +1,92 @@
+$md-mcgpaletdarkblue: (
+    50 : #e7ebef,
+    100 : #c4ccd7,
+    200 : #9daabd,
+    300 : #7588a3,
+    400 : #586f8f,
+    500 : #3a557b,
+    600 : #344e73,
+    700 : #2c4468,
+    800 : #253b5e,
+    900 : #182a4b,
+    A100 : #8ab0ff,
+    A200 : #578eff,
+    A400 : #246bff,
+    A700 : #0a5aff,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #ffffff,
+        500 : #ffffff,
+        600 : #ffffff,
+        700 : #ffffff,
+        800 : #ffffff,
+        900 : #ffffff,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #ffffff,
+        A700 : #ffffff,
+    )
+);
+
+/* For use in src/lib/core/theming/_palette.scss */
+$md-mcgpalette0: (
+    50 : #fcf8ef,
+    100 : #f7edd8,
+    200 : #f1e1be,
+    300 : #ebd5a4,
+    400 : #e7cc91,
+    500 : #e3c37d,
+    600 : #e0bd75,
+    700 : #dcb56a,
+    800 : #d8ae60,
+    900 : #d0a14d,
+    A100 : #ffffff,
+    A200 : #fffdf9,
+    A400 : #ffeac6,
+    A700 : #ffe0ad,
+    contrast: (
+        50 : #000000,
+        100 : #000000,
+        200 : #000000,
+        300 : #000000,
+        400 : #000000,
+        500 : #000000,
+        600 : #000000,
+        700 : #000000,
+        800 : #000000,
+        900 : #000000,
+        A100 : #000000,
+        A200 : #000000,
+        A400 : #000000,
+        A700 : #000000,
+    )
+);
+
+
+
+$green-app-primary: mat-palette($md-mcgpaletdarkblue);
+$green-app-accent: mat-palette($md-mcgpalette0);
+$green-app-warn: mat-palette($mat-pink);
+// Create the theme object (a Sass map containing all of the palettes).
+$green-app-theme: mat-light-theme($green-app-primary, $green-app-accent, $green-app-warn);
+$themecolor:#2E476A;
+$themecolor-alt: #3A557B;
+$white:#fff;
+#snav {
+    .mat-nav-list .mat-list-item { 
+        .mat-list-item-content {
+            &:hover {
+                > a {
+                    color: $themecolor;
+                }
+            }
+        }
+        &.selected > .mat-list-item-content > a {
+            background: $themecolor-alt;
+            color: $white;
+        }
+    }
+}

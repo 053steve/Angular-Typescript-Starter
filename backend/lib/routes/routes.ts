@@ -52,7 +52,7 @@ const models: TsoaRoute.Models = {
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "Pick_IUser.firstname-or-lastname-or-username-or-email-or-user_type-or-createdAt-or-updatedAt_": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"firstname":{"dataType":"string","required":true},"lastname":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"email":{"dataType":"string","required":true},"user_type":{"ref":"USER_TYPE","required":true},"createdAt":{"dataType":"union","subSchemas":[{"dataType":"datetime"},{"dataType":"any"}]},"updatedAt":{"dataType":"union","subSchemas":[{"dataType":"datetime"},{"dataType":"any"}]}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"firstname":{"dataType":"string","required":true},"lastname":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"email":{"dataType":"string","required":true},"user_type":{"ref":"USER_TYPE","required":true},"createdAt":{"dataType":"datetime"},"updatedAt":{"dataType":"datetime"}},"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "ISafeUser": {
@@ -91,14 +91,19 @@ const models: TsoaRoute.Models = {
         "type": {"ref":"Pick_IUser.firstname-or-lastname-or-username-or-password-or-email-or-user_type_","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Pick_IUser.firstname-or-lastname-or-username-or-email_": {
+    "Pick_UserUpdateReqPick.Exclude_keyofUserUpdateReqPick.firstname-or-lastname-or-username-or-email__": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"firstname":{"dataType":"string","required":true},"lastname":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"email":{"dataType":"string","required":true}},"validators":{}},
+        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{},"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Omit_UserUpdateReqPick.firstname-or-lastname-or-username-or-email_": {
+        "dataType": "refAlias",
+        "type": {"ref":"Pick_UserUpdateReqPick.Exclude_keyofUserUpdateReqPick.firstname-or-lastname-or-username-or-email__","validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "UserUpdateReq": {
         "dataType": "refAlias",
-        "type": {"ref":"Pick_IUser.firstname-or-lastname-or-username-or-email_","validators":{}},
+        "type": {"dataType":"intersection","subSchemas":[{"ref":"Omit_UserUpdateReqPick.firstname-or-lastname-or-username-or-email_"},{"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string"},"username":{"dataType":"string"},"lastname":{"dataType":"string"},"firstname":{"dataType":"string"}}}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -131,6 +136,36 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.auth.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/user/search',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    username: {"in":"query","name":"username","dataType":"string"},
+                    email: {"in":"query","name":"email","dataType":"string"},
+                    firstname: {"in":"query","name":"firstname","dataType":"string"},
+                    lastname: {"in":"query","name":"lastname","dataType":"string"},
+                    pageNumber: {"in":"query","name":"pageNumber","dataType":"double"},
+                    pageSize: {"in":"query","name":"pageSize","dataType":"double"},
+                    filter: {"in":"query","name":"filter","dataType":"string"},
+                    sortOrder: {"in":"query","name":"sortOrder","dataType":"string"},
+                    req: {"in":"request","name":"req","dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new UserController();
+
+
+            const promise = controller.searchUser.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
@@ -224,6 +259,59 @@ export function RegisterRoutes(app: express.Express) {
 
 
             const promise = controller.updateUser.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.delete('/user/delete/:userId',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    userId: {"in":"path","name":"userId","required":true,"dataType":"string"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new UserController();
+
+
+            const promise = controller.deleteUser.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.get('/user/:user_type',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    user_type: {"in":"path","name":"user_type","required":true,"ref":"USER_TYPE"},
+                    username: {"in":"query","name":"username","dataType":"string"},
+                    email: {"in":"query","name":"email","dataType":"string"},
+                    firstName: {"in":"query","name":"firstName","dataType":"string"},
+                    lastName: {"in":"query","name":"lastName","dataType":"string"},
+                    pageNumber: {"in":"query","name":"pageNumber","dataType":"double"},
+                    pageSize: {"in":"query","name":"pageSize","dataType":"double"},
+                    filter: {"in":"query","name":"filter","dataType":"string"},
+                    sortOrder: {"in":"query","name":"sortOrder","dataType":"string"},
+                    req: {"in":"request","name":"req","dataType":"object"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new UserController();
+
+
+            const promise = controller.getUserByUserType.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

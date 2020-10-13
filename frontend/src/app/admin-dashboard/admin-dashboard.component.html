@@ -1,0 +1,98 @@
+<div class="main-container" [dir]="dir"
+  [ngClass]="{'minisidebar': minisidebar, 'boxed': boxed, 'danger': danger, 'blue': blue, 'green': green, 'dark': dark }">
+  <mat-toolbar color="primary" class="topbar telative">
+    <div class="navbar-header">
+      <a class="navbar-brand" href="/">
+        <span fxShow="false" fxShow.gt-xs>
+          <label class="logofont-admin">BOQ</label>
+          </span>
+      </a>
+    </div>
+    <button mat-icon-button (click)="snav.toggle() && clickEvent()" value="sidebarclosed">
+      <mat-icon>menu</mat-icon>
+    </button>
+    <span fxflex="" ng-reflect-fx-flex="" style="flex: 1 1 0%;box-sizing: border-box;"></span>
+        <button [matMenuTriggerFor]="profile" mat-icon-button class="m-r-5">
+          <img src="assets/images/users/1.png" alt="user" class="profile-pic"> </button>
+        <mat-menu #profile="matMenu" class="mymegamenu">
+          <button mat-menu-item (click)="logout()">
+              <mat-icon>exit_to_app</mat-icon> Sign Out </button>
+        </mat-menu>
+  </mat-toolbar>
+  <mat-sidenav-container class="example-sidenav-container" [style.marginTop.px]="mobileQuery.matches ? 0 : 0"
+    [ngClass]="{'minisidebar': minisidebar}">
+    <mat-sidenav #snav id="snav" class="pl-xs" [mode]="mobileQuery.matches ? 'side' : 'over'" fixedTopGap="0"
+      [opened]="mobileQuery.matches" [disableClose]="mobileQuery.matches" (open)="sidebarOpened = true"
+      (close)="sidebarOpened = false" [perfectScrollbar]="config">
+      <div class="app-sidebar">
+      <mat-nav-list appAccordion>
+          <mat-list-item appAccordionLink *ngFor="let menuitem of menuItems.getMenuitemForAdmin()" routerLinkActive="selected" group="{{menuitem.state}}" (click)="scrollToTop()">
+              <a class="" appAccordionToggle routerLink="{{menuitem.state}}" *ngIf="menuitem.type === 'link'">
+                  <mat-icon>{{ menuitem.icon }}</mat-icon>
+                  <span>{{ menuitem.name }}</span>
+                  <span fxFlex></span>
+                  <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+              </a>
+      
+              <a class="" appAccordionToggle href="{{menuitem.state}}" *ngIf="menuitem.type === 'extLink'">
+                  <mat-icon>{{ menuitem.icon }}</mat-icon>
+                  <span>{{ menuitem.name }}</span>
+                  <span fxFlex></span>
+                  <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+              </a>
+              <a class="" appAccordionToggle href="{{menuitem.state}}" target="_blank" *ngIf="menuitem.type === 'extTabLink'">
+                  <mat-icon>{{ menuitem.icon }}</mat-icon>
+                  <span>{{ menuitem.name}}</span>
+                  <span fxFlex></span>
+                  <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+              </a>
+      
+              <a class="" appAccordionToggle href="javascript:;" *ngIf="menuitem.type === 'sub'">
+                  <mat-icon>{{ menuitem.icon }}</mat-icon>
+                  <span>{{ menuitem.name }}</span>
+                  <span fxFlex></span>
+                  <span class="label label-{{ badge.type }}" *ngFor="let badge of menuitem.badge">{{ badge.value }}</span>
+                  <mat-icon class="dd-icon">keyboard_arrow_down</mat-icon>
+              </a>
+              <mat-nav-list class="sub-item" *ngIf="menuitem.type === 'sub'" >
+                  <mat-list-item *ngFor="let childitem of menuitem.children; let j=index; let i = childitem" routerLinkActive="selected">
+                      <a [routerLink]="['/', menuitem.state, childitem.state ]"  *ngIf="childitem.type === 'link'" class="relative"
+                          routerLinkActive="selected" (click)="itemSelect[i]=j">{{ childitem.name}}</a>
+                  </mat-list-item>
+                  <mat-list-item *ngFor="let childitem of menuitem.children; let j=index; let i=childitem">
+                      <a class="" href="javascript: void(0);" *ngIf="childitem.type === 'subchild'" (click)="itemSelect[i]=j"
+                          [ngClass]="j==itemSelect[i]? 'selected' : ''">
+                          <span>{{ childitem.name }}</span>
+                          <span fxFlex></span>
+                          <mat-icon class="dd-icon">keyboard_arrow_down</mat-icon>
+                      </a>
+                      <mat-nav-list class="child-sub-item" *ngIf="childitem.type === 'subchild'" >
+                          <mat-list-item *ngFor="let child of childitem.subchildren" routerLinkActive="selected">
+                              <a [routerLink]="['/', menuitem.state, childitem.state, child.state ]" routerLinkActive="selected" >{{child.name}}</a>
+                          </mat-list-item>
+                      </mat-nav-list>
+                  </mat-list-item>
+      
+              </mat-nav-list>
+      
+              <div class="saperator text-muted" *ngIf="menuitem.type === 'saperator'">
+                  <span>{{ menuitem.name }}</span>
+              </div>
+          </mat-list-item>
+      </mat-nav-list>
+      </div>
+    </mat-sidenav>
+    <mat-sidenav-content class="page-wrapper" [ngClass]="status ? 'minitoggle' : ''">
+
+      <!-- <app-breadcrumb></app-breadcrumb> -->
+      
+      <div class="page-content">
+        <app-alert></app-alert>
+        <app-loader></app-loader>
+        <router-outlet>
+        </router-outlet>
+      </div>
+
+    </mat-sidenav-content>
+  </mat-sidenav-container>
+</div>

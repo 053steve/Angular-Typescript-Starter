@@ -1,12 +1,17 @@
 import {FormatResponse} from "../../common/interfaces";
 import {User} from "./user.model";
+import {ALL_USER_TYPE, USER_TYPE, USER_TYPE_ENUM} from "../../constants";
+import {BaseModel} from "../../common/interfaces/base";
 
-type Optional<T, K extends keyof T> = Omit<T, K> & Partial<T>;
 
-
-
-export interface IUser extends User {
-
+export interface IUser extends BaseModel{
+    firstname: string;
+    lastname: string;
+    username: string;
+    password: string;
+    employee_no?: string;
+    user_type: USER_TYPE
+    email: string;
 }
 
 export type ISafeUser = Pick<IUser, "firstname" | "lastname" | "username" | "email" | "user_type" | "createdAt" | "updatedAt">;
@@ -21,14 +26,21 @@ export interface UserPayload {
 export type UserCreateReq = Pick<IUser,"firstname" | "lastname" | "username" | "password" | "email" | "user_type">;
 
 
-// export type UserUpdateReq = Pick<IUser,"firstname" | "lastname" | "username" | "email">;
+type UserUpdateReqPick = Pick<IUser,"firstname" | "lastname" | "username" | "email">;
 
-export type UserUpdateReq = Optional<IUser,"firstname" | "lastname" | "username" | "email">;
+
+export type UserUpdateReq = Omit<UserUpdateReqPick,"firstname" | "lastname" | "username" | "email"> & {
+    firstname?: string;
+    lastname?: string;
+    username?: string;
+    email?: string;
+}
 
 
 export interface UserResponse extends FormatResponse {
     payload? : UserPayload
 }
+
 
 
 

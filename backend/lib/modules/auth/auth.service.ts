@@ -51,7 +51,7 @@ export class AuthService {
         // this is external promise needed for passport
         return new Promise((resolve, reject)=> {
 
-            passport.authenticate('local', (err: Error, user: IUser, info: IVerifyOptions) => {
+            passport.authenticate('local', (err: Error, user: User, info: IVerifyOptions) => {
                 if (!user) {
                     return reject();
                 }

@@ -23,30 +23,30 @@ import {USER_TYPE} from "../../constants";
 export class UserController {
 
     // @Security("jwt")
-    // @Get('search')
-    // @Tags('user')
-    // public async searchUser(
-    //     @Query() username?: string,
-    //     @Query() email?: string,
-    //     @Query() firstname?: string,
-    //     @Query() lastname?: string,//
-    //     @Query() pageNumber?: number,
-    //     @Query() pageSize?: number,
-    //     @Query() filter?: string,
-    //     @Query() sortOrder?: string,
-    //     @Request() req?: express.Request
-    // ): Promise<UserResponse> {
-    //     const result: UserPayload = await new UserService().getAllUsers(req.query);
-    //     const userResponse: UserResponse = {
-    //         success: true,
-    //         payload: {
-    //             users: result.users,
-    //             userLength: result.userLength
-    //         }
-    //     }
-    //
-    //     return userResponse;
-    // }
+    @Get('search')
+    @Tags('user')
+    public async searchUser(
+        @Query() username?: string,
+        @Query() email?: string,
+        @Query() firstname?: string,
+        @Query() lastname?: string,//
+        @Query() pageNumber?: number,
+        @Query() pageSize?: number,
+        @Query() filter?: string,
+        @Query() sortOrder?: string,
+        @Request() req?: express.Request
+    ): Promise<UserResponse> {
+        const result: UserPayload = await new UserService().getAllUsers(req.query);
+        const userResponse: UserResponse = {
+            success: true,
+            payload: {
+                users: result.users,
+                userLength: result.userLength
+            }
+        }
+
+        return userResponse;
+    }
 
     @Post('create')
     @Tags('user')
@@ -90,15 +90,15 @@ export class UserController {
     @Tags('user')
     public async getUser(@Path() userId: string): Promise<UserResponse> {
 
-            const result: UserPayload = await new UserService().getUser(userId);
-            const userResponse: UserResponse = {
-                success: true,
-                payload: {
-                    user: result.user
-                }
+        const result: UserPayload = await new UserService().getUser(userId);
+        const userResponse: UserResponse = {
+            success: true,
+            payload: {
+                user: result.user
             }
+        }
 
-            return userResponse;
+        return userResponse;
 
     }
 
@@ -130,73 +130,72 @@ export class UserController {
     }
 
     // @Security("jwt")
-    // @Delete("delete/{userId}")
-    // @Tags('user')
-    // public async deleteUser(
-    //     @Path() userId: string
-    // ): Promise<UserResponse> {
-    //     const userService = new UserService();
-    //     try {
-    //         const getUserResult: UserPayload = await userService.getUser(userId);
-    //         await userService.deleteUser(getUserResult.user);
-    //
-    //         const userResponse: UserResponse = {
-    //             success: true,
-    //         }
-    //
-    //         return userResponse;
-    //
-    //     } catch (err) {
-    //         throw new ApiError(false,"Delete Fail",400,"Delete failed");
-    //     }
-    //
-    // }
+    @Delete("delete/{userId}")
+    @Tags('user')
+    public async deleteUser(
+        @Path() userId: string
+    ): Promise<UserResponse> {
+        const userService = new UserService();
+        try {
+            const getUserResult: UserPayload = await userService.getUser(userId);
+            await userService.deleteUser(getUserResult.user);
+
+            const userResponse: UserResponse = {
+                success: true,
+            }
+
+            return userResponse;
+
+        } catch (err) {
+            throw new ApiError(false,"Delete Fail",400,"Delete failed");
+        }
+
+    }
 
 
     // @Security("jwt")
-    // @Get("{user_type}")
-    // @Tags('user')
-    // public async getUserByUserType(
-    //     @Path() user_type: USER_TYPE,
-    //     @Query() username?: string,
-    //     @Query() email?: string,
-    //     @Query() firstName?: string,
-    //     @Query() lastName?: string,
-    //     @Query() lineId?: string,
-    //     @Query() pageNumber?: number,
-    //     @Query() pageSize?: number,
-    //     @Query() filter?: string,
-    //     @Query() sortOrder?: string,
-    //     @Request() req?: express.Request
-    // ): Promise<UserResponse> {
-    //     const userService = new UserService();
-    //     try {
-    //         const query = {
-    //             user_type,
-    //             pageNumber,
-    //             pageSize,
-    //             filter,
-    //             sortOrder,
-    //             ...req.query
-    //         }
-    //
-    //         const result: UserPayload = await userService.getUserByUserType(query);
-    //
-    //
-    //         const userResponse: UserResponse = {
-    //             success: true,
-    //             payload: {
-    //                 users: result.users,
-    //                 userLength: result.userLength
-    //             }
-    //         }
-    //
-    //         return userResponse;
-    //
-    //     } catch (err) {
-    //         throw new ApiError(false,"Get Fail",400,"Cannot Get Users");
-    //     }
-    //
-    // }
+    @Get("{user_type}")
+    @Tags('user')
+    public async getUserByUserType(
+        @Path() user_type: USER_TYPE,
+        @Query() username?: string,
+        @Query() email?: string,
+        @Query() firstName?: string,
+        @Query() lastName?: string,
+        @Query() pageNumber?: number,
+        @Query() pageSize?: number,
+        @Query() filter?: string,
+        @Query() sortOrder?: string,
+        @Request() req?: express.Request
+    ): Promise<UserResponse> {
+        const userService = new UserService();
+        try {
+            const query = {
+                user_type,
+                pageNumber,
+                pageSize,
+                filter,
+                sortOrder,
+                ...req.query
+            }
+
+            const result: UserPayload = await userService.getUserByUserType(query);
+
+
+            const userResponse: UserResponse = {
+                success: true,
+                payload: {
+                    users: result.users,
+                    userLength: result.userLength
+                }
+            }
+
+            return userResponse;
+
+        } catch (err) {
+            throw new ApiError(false,"Get Fail",400,"Cannot Get Users");
+        }
+
+    }
 
 }

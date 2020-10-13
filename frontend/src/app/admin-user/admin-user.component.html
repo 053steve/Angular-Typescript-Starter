@@ -1,0 +1,93 @@
+<div fxLayout="row wrap">
+    <div fxFlex="100">
+      <mat-card>
+        <mat-card-content>
+          <div fxLayout="row wrap" class="align-items-center">
+            <div fxFlex.gt-md="25" fxFlex.gt-lg="25" fxFlex="100">
+              <mat-form-field>
+                <input matInput (keyup)="applyFilter($event.target.value)" placeholder="ค้นหารายชื่อ">
+                <mat-icon matSuffix (click)="applyFilter($event.target.value)">search</mat-icon>
+              </mat-form-field>
+            </div>
+            <div fxFlex.gt-md="75" class="text-right">
+              <button mat-raised-button (click)="openDialog('Add',{})" color="primary">เพิ่มผู้ใช้</button>
+            </div>
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  <app-blank *ngIf="this.userLength === 0"></app-blank>
+  <div fxLayout="row wrap" *ngIf="this.userLength !== 0">
+    <div fxFlex="100">
+      <mat-card>
+        <mat-card-content>
+          <div class="table-responsive">
+            <table mat-table [dataSource]="dataSource" class="table employee-list no-wrap">
+  
+              <ng-container matColumnDef="index">
+                <th mat-header-cell *matHeaderCellDef> # </th>
+                <td mat-cell *matCellDef="let item; let i = index;"> {{ i + (tableOptions.pageNumber * tableOptions.pageSize) + 1 }} </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="firstName">
+                <th mat-header-cell *matHeaderCellDef> ขื่อ </th>
+                <td mat-cell *matCellDef="let element">
+                  <div class="d-flex">
+                    <!-- <img class="mat-card-avatar" [src]='element.imagePath'> -->
+                    <div class="m-l-15">
+                      <p class="font-bold m-b-0 m-t-0">{{ element.firstName }}</p>
+                      <!-- <small>{{element.Position}}</small> -->
+                    </div>
+                  </div>
+                </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="lastName">
+                <th mat-header-cell *matHeaderCellDef> นามสกุล </th>
+                <td mat-cell *matCellDef="let element"> {{element.lastName}} </td>
+              </ng-container>
+  
+              <ng-container matColumnDef="username">
+                <th mat-header-cell *matHeaderCellDef> username </th>
+                <td mat-cell *matCellDef="let element"> {{element.username}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="lineid">
+                <th mat-header-cell *matHeaderCellDef> line ID </th>
+                <td mat-cell *matCellDef="let element"> {{element.lineId}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="role">
+                <th mat-header-cell *matHeaderCellDef> สิทธิ์ </th>
+                <td mat-cell *matCellDef="let element"> {{element.user_type}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="status">
+                <th mat-header-cell *matHeaderCellDef> สถานะ </th>
+                <td mat-cell *matCellDef="let element">  <mat-icon>{{ element.status ? 'check' : 'clear '}}</mat-icon></td>
+              </ng-container>
+
+              <ng-container matColumnDef="action">
+                <th mat-header-cell *matHeaderCellDef> Action </th>
+                <td mat-cell *matCellDef="let element" class="action-link">
+                  <a (click)="openDialog('Update',element)" class="m-r-10 cursor-pointer"><mat-icon>edit</mat-icon></a>
+                  <a (click)="openDialog('Delete',element)" class="m-r-10 cursor-pointer">
+                    <mat-icon style="color: #fc4b6c;">delete</mat-icon>
+                  </a>
+                </td>
+              </ng-container>
+  
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+            <mat-paginator class="pagination" [length]="userLength" [pageSize]="tableOptions.pageSize"
+              [pageSizeOptions]="pageSizeOptions" [hidePageSize]="true" (page)="onPageChanged($event)">
+            </mat-paginator>
+            <!-- <mat-paginator [pageSizeOptions]="[5, 10, 20]" showFirstLastButtons></mat-paginator> -->
+          </div>
+        </mat-card-content>
+      </mat-card>
+    </div>
+  </div>
+  

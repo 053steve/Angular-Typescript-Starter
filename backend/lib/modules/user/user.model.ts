@@ -44,20 +44,20 @@ export class User extends Model<BaseModel> {
 
 
     @BeforeCreate
-    static async preSave(user: IUser) {
+    static async preSave(user: User) {
         const salt = await bcrypt.genSalt(10);
         user.password = await bcrypt.hash(user.password, salt);
     }
 
     async validatePassword(password) {
-        const user: IUser = this;
+        const user: User = this;
         const isMatch = await bcrypt.compare(password, user.password);
         return isMatch;
 
     }
 
     generateToken() {
-        const user: IUser = this;
+        const user: User = this;
         return jwt.sign({ id: user.id }, config.token, { expiresIn: '1h' });
     }
 

@@ -1,0 +1,52 @@
+<h2 mat-dialog-title>Row Action :: <strong>{{action}}</strong></h2>
+<mat-dialog-content class="mat-typography" *ngIf="action != 'Delete'; else elseTemplate">
+  <form #userForm="ngForm">
+    <mat-form-field>
+      <input type="text" matInput required id="firstName" name="firstName" [(ngModel)]="local_data.firstName"
+        placeholder="ชื่อ">
+    </mat-form-field>
+    <mat-form-field>
+        <input type="text" matInput required id="lastName" name="lastName" [(ngModel)]="local_data.lastName"
+          placeholder="นามสกุล">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput required id="username" name="username" [(ngModel)]="local_data.username"
+          placeholder="username">
+      </mat-form-field>
+      <mat-form-field *ngIf="action === 'Add'">
+        <input type="password" matInput required id="password" name="password" [(ngModel)]="local_data.password"
+          placeholder="password">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput id="lineId" name="lineId" [(ngModel)]="local_data.lineId"
+          placeholder="lineId">
+      </mat-form-field>
+      <mat-form-field>
+        <input type="text" matInput required id="email" name="email" [(ngModel)]="local_data.email"
+          placeholder="email">
+      </mat-form-field>
+      <section class="example-section">
+        <label style="margin: 0 10px;">status:</label>
+        <mat-radio-group>
+          <mat-radio-button style="margin: 0 10px;" (change)="setAll(true)" [checked]="local_data.status === true" value="true">Active</mat-radio-button>
+          <mat-radio-button style="margin: 0 10px;" (change)="setAll(false)" [checked]="local_data.status === false" value="false">Deactive</mat-radio-button>
+        </mat-radio-group>
+      </section>
+  
+      <!-- <mat-form-field>
+        <mat-label>User Type</mat-label>
+        <select matNativeControl required name="user_type" [(ngModel)]="local_data.user_type">
+          <option value="CUSTOMER">STAFF</option>
+          <option value="STAFF">STAFF</option>
+          <option value="ADMIN">ADMIN</option>
+        </select>
+      </mat-form-field> -->
+  </form>
+</mat-dialog-content>
+<ng-template #elseTemplate>
+  Sure to delete <b>{{local_data.title}}</b>?
+</ng-template>
+<div mat-dialog-actions align="end">
+  <button (click)="doAction()" mat-flat-button color="warn" [disabled]="checkDisabled(local_data)">{{action}}</button>
+  <button mat-button (click)="closeDialog()" mat-flat-button>Cancel</button>
+</div>

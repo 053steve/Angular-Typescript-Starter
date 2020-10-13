@@ -26,5 +26,9 @@
     "routesDir": "lib/routes",
     "entryFile": "lib/app.ts",
     "authenticationModule": "lib/middleware/authentication.ts"
-  }
+  },
+  "ignore": [
+    "**/node_modules/sequelize/**",
+    "**/node_modules/sequelize-typescript/**"
+  ]
 }
