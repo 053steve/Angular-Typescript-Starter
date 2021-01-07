@@ -1,13 +1,19 @@
+---
+to: lib/modules/<%=name%>/<%=name%>.model.ts
+---
+
+
+
 import {INTEGER, STRING} from 'sequelize';
 
 export default (sequelize, DataTypes) =>   {
-  const Machine = sequelize.define('Machine', {
+  const <%=h.capitalize(name)%> = sequelize.define('<%= h.capitalize(name) %>', {
       id: {
           type: INTEGER,
           autoIncrement: true,
           primaryKey: true
       },
-      name: {
+      title: {
         type: STRING,
         unique: true,
         allowNull: false
@@ -17,5 +23,5 @@ export default (sequelize, DataTypes) =>   {
   });
 
   
-  return Machine;
+  return <%=h.capitalize(name)%>;
 };

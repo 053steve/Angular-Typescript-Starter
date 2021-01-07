@@ -54,6 +54,158 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"Pick_IMachine.name-or-shortName-or-longName-or-createdAt-or-updatedAt_": {
+				"properties": {
+					"name": {
+						"type": "string"
+					},
+					"shortName": {
+						"type": "string"
+					},
+					"longName": {
+						"type": "string"
+					},
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"ISafeMachine": {
+				"$ref": "#/components/schemas/Pick_IMachine.name-or-shortName-or-longName-or-createdAt-or-updatedAt_"
+			},
+			"MachinePayload": {
+				"properties": {
+					"machine": {
+						"$ref": "#/components/schemas/ISafeMachine"
+					},
+					"machines": {
+						"items": {
+							"$ref": "#/components/schemas/ISafeMachine"
+						},
+						"type": "array"
+					},
+					"machineLength": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"MachineResponse": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					},
+					"payload": {
+						"$ref": "#/components/schemas/MachinePayload"
+					},
+					"message": {}
+				},
+				"required": [
+					"success"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_IMachine.name_": {
+				"properties": {
+					"name": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"name"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"MachineReq": {
+				"$ref": "#/components/schemas/Pick_IMachine.name_"
+			},
+			"Pick_ITest.title-or-createdAt-or-updatedAt_": {
+				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"title": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"title"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"ISafeTest": {
+				"$ref": "#/components/schemas/Pick_ITest.title-or-createdAt-or-updatedAt_"
+			},
+			"TestPayload": {
+				"properties": {
+					"test": {
+						"$ref": "#/components/schemas/ISafeTest"
+					},
+					"tests": {
+						"items": {
+							"$ref": "#/components/schemas/ISafeTest"
+						},
+						"type": "array"
+					},
+					"listLength": {
+						"type": "number",
+						"format": "double"
+					}
+				},
+				"type": "object",
+				"additionalProperties": false
+			},
+			"TestResponse": {
+				"properties": {
+					"success": {
+						"type": "boolean"
+					},
+					"payload": {
+						"$ref": "#/components/schemas/TestPayload"
+					},
+					"message": {}
+				},
+				"required": [
+					"success"
+				],
+				"type": "object",
+				"additionalProperties": false
+			},
+			"Pick_ITest.title_": {
+				"properties": {
+					"title": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"title"
+				],
+				"type": "object",
+				"description": "From T, pick a set of properties whose keys are in the union K"
+			},
+			"TestReq": {
+				"$ref": "#/components/schemas/Pick_ITest.title_"
+			},
 			"USER_TYPE": {
 				"type": "string",
 				"enum": [
@@ -63,6 +215,14 @@
 			},
 			"Pick_IUser.firstname-or-lastname-or-username-or-email-or-user_type-or-createdAt-or-updatedAt_": {
 				"properties": {
+					"createdAt": {
+						"type": "string",
+						"format": "date-time"
+					},
+					"updatedAt": {
+						"type": "string",
+						"format": "date-time"
+					},
 					"firstname": {
 						"type": "string"
 					},
@@ -77,14 +237,6 @@
 					},
 					"user_type": {
 						"$ref": "#/components/schemas/USER_TYPE"
-					},
-					"createdAt": {
-						"type": "string",
-						"format": "date-time"
-					},
-					"updatedAt": {
-						"type": "string",
-						"format": "date-time"
 					}
 				},
 				"required": [
@@ -258,6 +410,520 @@
 						}
 					}
 				}
+			}
+		},
+		"/machine/create": {
+			"post": {
+				"operationId": "CreateMachine",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MachineResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"machine"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/MachineReq"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/machine/update/{machineId}": {
+			"put": {
+				"operationId": "UpdateMachine",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MachineResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"machine"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "machineId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/MachineReq"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/machine/detail/{machineId}": {
+			"get": {
+				"operationId": "GetMachine",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MachineResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"machine"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "machineId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/machine/delete/{machineId}": {
+			"delete": {
+				"operationId": "DeleteMachine",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MachineResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"machine"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "machineId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/machine/list": {
+			"get": {
+				"operationId": "GetAllMachines",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MachineResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"machine"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "pageNumber",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sortOrder",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/machine/search": {
+			"get": {
+				"operationId": "GetMachineByName",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/MachineResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"machine"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "name",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageNumber",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sortOrder",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/test/create": {
+			"post": {
+				"operationId": "CreateTest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TestResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"test"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TestReq"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/test/update/{testId}": {
+			"patch": {
+				"operationId": "UpdateTest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TestResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"test"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "testId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/TestReq"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/test/detail/{testId}": {
+			"get": {
+				"operationId": "GetTest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TestResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"test"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "testId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/test/delete/{testId}": {
+			"delete": {
+				"operationId": "DeleteTest",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TestResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"test"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "path",
+						"name": "testId",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/test/list": {
+			"get": {
+				"operationId": "GetAllTests",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TestResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"test"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "pageNumber",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sortOrder",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
+			}
+		},
+		"/test/search": {
+			"get": {
+				"operationId": "GetTestByName",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/TestResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"test"
+				],
+				"security": [],
+				"parameters": [
+					{
+						"in": "query",
+						"name": "name",
+						"required": true,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageNumber",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "pageSize",
+						"required": false,
+						"schema": {
+							"format": "double",
+							"type": "number"
+						}
+					},
+					{
+						"in": "query",
+						"name": "filter",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					},
+					{
+						"in": "query",
+						"name": "sortOrder",
+						"required": false,
+						"schema": {
+							"type": "string"
+						}
+					}
+				]
 			}
 		},
 		"/user/search": {
