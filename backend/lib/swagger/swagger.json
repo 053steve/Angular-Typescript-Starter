@@ -6,14 +6,14 @@
 		"requestBodies": {},
 		"responses": {},
 		"schemas": {
-			"User": {
+			"IUser": {
 				"additionalProperties": false,
 				"type": "object"
 			},
 			"AuthPayload": {
 				"properties": {
 					"user": {
-						"$ref": "#/components/schemas/User"
+						"$ref": "#/components/schemas/IUser"
 					},
 					"token": {
 						"type": "string"

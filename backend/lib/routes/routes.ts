@@ -12,7 +12,7 @@ import * as express from 'express';
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
 const models: TsoaRoute.Models = {
-    "User": {
+    "IUser": {
         "dataType": "refAlias",
         "type": {"dataType":"object","validators":{}},
     },
@@ -20,7 +20,7 @@ const models: TsoaRoute.Models = {
     "AuthPayload": {
         "dataType": "refObject",
         "properties": {
-            "user": {"ref":"User"},
+            "user": {"ref":"IUser"},
             "token": {"dataType":"string"},
         },
         "additionalProperties": false,
@@ -111,7 +111,7 @@ const validationService = new ValidationService(models);
 
 // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 
-export function RegisterRoutes(app: express.Express) {
+export function RegisterRoutes(app: express.Router) {
     // ###########################################################################################################
     //  NOTE: If you do not see routes for all of your controllers in this file, then you might not have informed tsoa of where to look
     //      Please look into the "controllerPathGlobs" config option described in the readme: https://github.com/lukeautry/tsoa

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from 'express';
-import {User} from '../user/user.model';
+
 import { IVerifyOptions } from 'passport-local';
 import passport from 'passport';
 import {ApiError} from "../../common/utils/apiError";
@@ -51,7 +51,7 @@ export class AuthService {
         // this is external promise needed for passport
         return new Promise((resolve, reject)=> {
 
-            passport.authenticate('local', (err: Error, user: User, info: IVerifyOptions) => {
+            passport.authenticate('local', (err: Error, user: any, info: IVerifyOptions) => {
                 if (!user) {
                     return reject();
                 }

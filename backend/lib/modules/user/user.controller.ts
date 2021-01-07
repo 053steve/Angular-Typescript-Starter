@@ -59,7 +59,7 @@ export class UserController {
                 token: result.token
             }
         }
-
+        console.log('userResponse : >> ',userResponse);
         return userResponse;
     }
 

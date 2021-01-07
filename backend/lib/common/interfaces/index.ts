@@ -15,5 +15,7 @@ export interface FormatResponse {
     message?: any
 }
 
-
+export interface DB {
+    [key: string]: any;
+}
 

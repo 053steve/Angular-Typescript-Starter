@@ -1,7 +1,7 @@
-import {User} from './user.model';
+
+import {db} from '../../db';
 import {ApiError} from "../../common/utils/apiError";
 import {ISafeUser, IUser, UserPayload, UserUpdateReq} from "./user.interface";
-import {Query} from "tsoa";
 import Sequelize from "sequelize";
 
 const Op = Sequelize.Op;
@@ -12,11 +12,11 @@ export class UserService {
 
     public async createNewUser(user): Promise<UserPayload> {
 
-        let newUser: any;
+        let newUser: IUser;
 
         try {
 
-            newUser = await User.create(user);
+            newUser = await db.User.create(user);
 
         } catch (err) {
             console.log(err);
@@ -37,7 +37,8 @@ export class UserService {
         let user: any;
 
         try {
-            user = await User.findOne({where: {id: userId}, attributes: { exclude: ['password']}});
+
+            user = await db.User.findOne({where: {id: userId}, attributes: { exclude: ['password']}});
 
             if (!user) {
                 throw new ApiError(false,"UserNotFound",400,"user not found");
@@ -76,7 +77,8 @@ export class UserService {
 
         try {
 
-            const users: any[] = await User.findAll({
+
+            const users: any[] = await db.User.findAll({
                 where: query,
                 offset: pageOptions.pageNumber * pageOptions.pageSize,
                 limit: pageOptions.pageSize,
@@ -89,7 +91,7 @@ export class UserService {
                 throw new ApiError(false,"UserNotFound",422,"cannot find user");
             }
 
-            const userLength = await User.count({where: query});
+            const userLength = await db.User.count({where: query});
 
 
             return { users, userLength }
@@ -157,7 +159,8 @@ export class UserService {
         ) ? this.transformQueryToObj(reqQuery) : {};
 
         try {
-            const users: any[] = await User.findAll({
+
+            const users: any[] = await db.User.findAll({
                 where: query,
                 offset: pageOptions.pageNumber * pageOptions.pageSize,
                 limit: pageOptions.pageSize,
@@ -169,7 +172,7 @@ export class UserService {
                 throw new ApiError(false,"UserNotFound",422,"cannot find user");
             }
 
-            const userLength = await User.count({where: query});
+            const userLength = await db.User.count({where: query});
 
             return {users: users, userLength }
         } catch (err) {

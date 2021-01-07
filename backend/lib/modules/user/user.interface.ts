@@ -1,10 +1,15 @@
 import {FormatResponse} from "../../common/interfaces";
-import {User} from "./user.model";
 import {ALL_USER_TYPE, USER_TYPE, USER_TYPE_ENUM} from "../../constants";
-import {BaseModel} from "../../common/interfaces/base";
+import {Base} from "../../common/interfaces/base";
+import {Model} from "sequelize";
+
+export interface UserModel extends Model {
+    validatePassword?: (password: string) => Promise<boolean>;
+    generateToken?: () => string;
+}
 
 
-export interface IUser extends BaseModel{
+export interface IUser extends Base, UserModel {
     firstname: string;
     lastname: string;
     username: string;
@@ -13,6 +18,7 @@ export interface IUser extends BaseModel{
     user_type: USER_TYPE
     email: string;
 }
+
 
 export type ISafeUser = Pick<IUser, "firstname" | "lastname" | "username" | "email" | "user_type" | "createdAt" | "updatedAt">;
 

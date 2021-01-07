@@ -4,9 +4,9 @@ import cors from 'cors';
 import config from '../config';
 import passport from 'passport';
 import * as swaggerUI from 'swagger-ui-express';
+import {db} from './db';
 import { RegisterRoutes } from '../lib/routes/routes';
 import {errorHandler} from "./middleware/errorHandling";
-import {sequelize} from './sequalize';
 const swaggerJSON = require('./swagger/swagger.json');
 
 
@@ -51,7 +51,7 @@ class App {
     }
 
     private async setupSequalize(): Promise<void> {
-        await sequelize.sync({force: false});
+        await db.sequalize.sync({force: false});
     }
 
 

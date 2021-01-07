@@ -1,6 +1,8 @@
 import passport from 'passport';
+import {db} from '../lib/db';
 import { Strategy } from 'passport-local';
-import {User} from '../lib/modules/user/user.model';
+
+
 
 passport.use('local', new Strategy({
   usernameField: 'username',
@@ -8,7 +10,8 @@ passport.use('local', new Strategy({
 }, async (username, password, done) => {
   
   try {
-    const user = await User.findOne({ where: { username } });
+
+    const user: any = await db.User.findOne({ where: { username } });
 
     if (!user) {       
       return done(null, false, {message: 'Incorrect Username'}); 
@@ -35,7 +38,8 @@ passport.serializeUser((user, done) => {
 
 passport.deserializeUser(async (id, done) => {
   try {
-    const user = await User.findOne({ where: { id } , attributes: {exclude: ['password']}});
+    // @ts-ignore
+    const user = await db.User.findOne({ where: { id } , attributes: {exclude: ['password']}});
     done(null, user);
   } catch (err) {
     done(err);

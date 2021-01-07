@@ -1,4 +1,4 @@
-import {User} from "../user/user.model";
+import {IUser} from "../user/user.interface";
 import {FormatResponse} from "../../common/interfaces";
 
 
@@ -8,7 +8,7 @@ export interface AuthRequest {
 }
 
 export interface AuthPayload {
-    user?: User;
+    user?: IUser;
     token? : string;
 }
 
