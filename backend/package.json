@@ -49,13 +49,16 @@
     "@types/node": "^14.11.8",
     "concurrently": "^5.3.0",
     "csv-parser": "^2.3.3",
+    "ejs": "^3.1.5",
+    "fs-extra": "^9.0.1",
     "nodemon": "^1.19.1",
     "serverless-offline": "^5.3.3",
     "serverless-webpack": "^5.2.0",
     "ts-loader": "^5.3.3",
     "typescript": "^3.2.4",
     "webpack": "^4.29.0",
-    "webpack-node-externals": "^1.7.2"
+    "webpack-node-externals": "^1.7.2",
+    "yargs-parser": "^20.2.4"
   },
   "author": "053steve",
   "license": "MIT"
