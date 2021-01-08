@@ -109,23 +109,19 @@ export class UserController {
         @Path() userId: string,
         @Body() user: UserUpdateReq
     ) :Promise<UserResponse> {
+
         const userService = new UserService();
-        try {
-            const getUserResult: UserPayload = await userService.getUser(userId);
-            const updatedUserResult = await userService.updateUser(getUserResult.user, user);
+        const getUserResult: UserPayload = await userService.getUser(userId);
+        const updatedUserResult = await userService.updateUser(getUserResult.user, user);
 
-            const userResponse: UserResponse = {
-                success: true,
-                payload: {
-                    user: updatedUserResult.user
-                }
+        const userResponse: UserResponse = {
+            success: true,
+            payload: {
+                user: updatedUserResult.user
             }
-
-            return userResponse;
-
-        } catch (err) {
-            throw new ApiError(false,"Update Fail",400,"Update failed");
         }
+
+        return userResponse;
 
     }
 
@@ -135,20 +131,16 @@ export class UserController {
     public async deleteUser(
         @Path() userId: string
     ): Promise<UserResponse> {
+
         const userService = new UserService();
-        try {
-            const getUserResult: UserPayload = await userService.getUser(userId);
-            await userService.deleteUser(getUserResult.user);
+        const getUserResult: UserPayload = await userService.getUser(userId);
+        await userService.deleteUser(getUserResult.user);
 
-            const userResponse: UserResponse = {
-                success: true,
-            }
-
-            return userResponse;
-
-        } catch (err) {
-            throw new ApiError(false,"Delete Fail",400,"Delete failed");
+        const userResponse: UserResponse = {
+            success: true,
         }
+
+        return userResponse;
 
     }
 
@@ -168,33 +160,29 @@ export class UserController {
         @Query() sortOrder?: string,
         @Request() req?: express.Request
     ): Promise<UserResponse> {
+
         const userService = new UserService();
-        try {
-            const query = {
-                user_type,
-                pageNumber,
-                pageSize,
-                filter,
-                sortOrder,
-                ...req.query
-            }
-
-            const result: UserPayload = await userService.getUserByUserType(query);
-
-
-            const userResponse: UserResponse = {
-                success: true,
-                payload: {
-                    users: result.users,
-                    userLength: result.userLength
-                }
-            }
-
-            return userResponse;
-
-        } catch (err) {
-            throw new ApiError(false,"Get Fail",400,"Cannot Get Users");
+        const query = {
+            user_type,
+            pageNumber,
+            pageSize,
+            filter,
+            sortOrder,
+            ...req.query
         }
+
+        const result: UserPayload = await userService.getUserByUserType(query);
+
+
+        const userResponse: UserResponse = {
+            success: true,
+            payload: {
+                users: result.users,
+                userLength: result.userLength
+            }
+        }
+
+        return userResponse;
 
     }
 

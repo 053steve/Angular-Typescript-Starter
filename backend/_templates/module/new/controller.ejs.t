@@ -45,24 +45,19 @@ export class <%= h.capitalize(name) %>Controller {
         @Path() <%=name%>Id: string,
         @Body() <%=name%>: <%= h.capitalize(name) %>Req
     ) :Promise<<%= h.capitalize(name) %>Response> {
+
         const <%=name%>Service = new <%= h.capitalize(name) %>Service();
-        try {
-            const get<%= h.capitalize(name) %>Result: <%= h.capitalize(name) %>Payload = await <%=name%>Service.get<%= h.capitalize(name) %>(<%=name%>Id);
-            const updated<%= h.capitalize(name) %>Result = await <%=name%>Service.update<%= h.capitalize(name) %>(get<%= h.capitalize(name) %>Result.<%=name%>, <%=name%>);
+        const get<%= h.capitalize(name) %>Result: <%= h.capitalize(name) %>Payload = await <%=name%>Service.get<%= h.capitalize(name) %>(<%=name%>Id);
+        const updated<%= h.capitalize(name) %>Result = await <%=name%>Service.update<%= h.capitalize(name) %>(get<%= h.capitalize(name) %>Result.<%=name%>, <%=name%>);
 
-            const <%=name%>Response: <%= h.capitalize(name) %>Response = {
-                success: true,
-                payload: {
-                  <%=name%>: updated<%= h.capitalize(name) %>Result.<%=name%>
-                }
+        const <%=name%>Response: <%= h.capitalize(name) %>Response = {
+            success: true,
+            payload: {
+              <%=name%>: updated<%= h.capitalize(name) %>Result.<%=name%>
             }
-
-            return <%=name%>Response;
-
-        } catch (err) {
-            throw new ApiError(false,"Update Fail",400,"Update failed");
         }
 
+        return <%=name%>Response;
     }
 
     @Get("detail/{<%=name%>Id}")
@@ -86,20 +81,17 @@ export class <%= h.capitalize(name) %>Controller {
     public async delete<%= h.capitalize(name) %>(
         @Path() <%=name%>Id: string
     ): Promise<<%= h.capitalize(name) %>Response> {
+
         const <%=name%>Service = new <%= h.capitalize(name) %>Service();
-        try {
-            const get<%= h.capitalize(name) %>Result: <%= h.capitalize(name) %>Payload = await <%=name%>Service.get<%= h.capitalize(name) %>(<%=name%>Id);
-            await <%=name%>Service.delete<%= h.capitalize(name) %>(get<%= h.capitalize(name) %>Result.<%=name%>);
+        const get<%= h.capitalize(name) %>Result: <%= h.capitalize(name) %>Payload = await <%=name%>Service.get<%= h.capitalize(name) %>(<%=name%>Id);
+        await <%=name%>Service.delete<%= h.capitalize(name) %>(get<%= h.capitalize(name) %>Result.<%=name%>);
 
-            const <%=name%>Response: <%= h.capitalize(name) %>Response = {
-                success: true,
-            }
-
-            return <%=name%>Response;
-
-        } catch (err) {
-            throw new ApiError(false,"Delete Fail",400,"Delete failed");
+        const <%=name%>Response: <%= h.capitalize(name) %>Response = {
+            success: true,
         }
+
+        return <%=name%>Response;
+
 
     }
 
@@ -135,32 +127,26 @@ export class <%= h.capitalize(name) %>Controller {
         @Request() req?: express.Request
     ): Promise<<%= h.capitalize(name) %>Response> {
         const <%=name%>Service = new <%= h.capitalize(name) %>Service();
-        try {
-            const query = {
-                name,
-                pageNumber,
-                pageSize,
-                filter,
-                sortOrder,
-                ...req.query
-            }
-
-            const result: <%= h.capitalize(name) %>Payload = await <%=name%>Service.get<%= h.capitalize(name) %>ByName(query);
-
-            const <%=name%>Response: <%= h.capitalize(name) %>Response = {
-                success: true,
-                payload: {
-                    <%=name%>s: result.<%=name%>s,
-                    listLength: result.listLength
-                }
-            }
-
-            return <%=name%>Response;
-
-        } catch (err) {
-            throw new ApiError(false,"Get Fail",400,"Cannot Get <%= h.capitalize(name) %>s");
+        const query = {
+            name,
+            pageNumber,
+            pageSize,
+            filter,
+            sortOrder,
+            ...req.query
         }
 
+        const result: <%= h.capitalize(name) %>Payload = await <%=name%>Service.get<%= h.capitalize(name) %>ByName(query);
+
+        const <%=name%>Response: <%= h.capitalize(name) %>Response = {
+            success: true,
+            payload: {
+                <%=name%>s: result.<%=name%>s,
+                listLength: result.listLength
+            }
+        }
+
+        return <%=name%>Response;
     }
 
 }

@@ -7,7 +7,6 @@ to: lib/modules/<%=name%>/<%=name%>.service.ts
 import {db} from '../../db';
 import {ApiError} from "../../common/utils/apiError";
 import {I<%= h.capitalize(name) %>, <%= h.capitalize(name) %>Payload, ISafe<%= h.capitalize(name) %>, <%= h.capitalize(name) %>Response, <%= h.capitalize(name) %>Req} from "./<%=name%>.interface";
-import {Query} from "tsoa";
 import Sequelize from "sequelize";
 
 const Op = Sequelize.Op;
