@@ -97,7 +97,7 @@ public async get<%= h.capitalize(name) %>ByName(reqQuery: any): Promise<<%= h.ca
   }
 
   const query = (
-      reqQuery.name
+      reqQuery.title
   ) ? this.transformQueryToObj(reqQuery) : {};
 
   try {
@@ -158,7 +158,7 @@ public async getAll<%= h.capitalize(name) %>s(reqQuery): Promise<<%= h.capitaliz
 
 private transformQueryToObj(query) {
   return {
-      ...query.name && {name: { [Op.like]: `%${query.name}%` }}
+      ...query.title && {title: { [Op.like]: `%${query.title}%` }}
   };
 }
 
