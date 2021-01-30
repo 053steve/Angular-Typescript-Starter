@@ -19,7 +19,7 @@ export default (sequelize, DataTypes) =>   {
         allowNull: false
       }
   },{
-      timestamp: true
+      timestamps: true
   });
 
   
