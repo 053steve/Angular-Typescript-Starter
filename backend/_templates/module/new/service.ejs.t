@@ -74,7 +74,7 @@ public async get<%= h.capitalize(name) %>(<%=name%>Id): Promise<<%= h.capitalize
 
 public async delete<%= h.capitalize(name) %>(<%=name%>: any): Promise<<%= h.capitalize(name) %>Payload> {
   if (!<%=name%>) { //passing user
-      throw new ApiError(false,"<%= h.capitalize(name) %>ServiceError",422,"update <%=name%> not sent");
+      throw new ApiError(false,"<%= h.capitalize(name) %>ServiceError",422,"delete <%=name%> not sent");
   }
 
   try {
@@ -82,7 +82,7 @@ public async delete<%= h.capitalize(name) %>(<%=name%>: any): Promise<<%= h.capi
       return { <%=name%> };
 
   } catch (err) {
-      throw new ApiError(false,"<%= h.capitalize(name) %>ServiceError",422,"cannot save <%=name%>");
+      throw new ApiError(false,"<%= h.capitalize(name) %>ServiceError",422,"cannot delete <%=name%>");
   }
 
 }
