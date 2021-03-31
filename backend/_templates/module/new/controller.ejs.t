@@ -119,7 +119,7 @@ export class <%= h.capitalize(name) %>Controller {
     @Get("search")
     @Tags('<%=name%>')
     public async get<%= h.capitalize(name) %>ByName(
-        @Query() name: string,
+        @Query() title: string,
         @Query() pageNumber?: number,
         @Query() pageSize?: number,
         @Query() filter?: string,
@@ -128,7 +128,7 @@ export class <%= h.capitalize(name) %>Controller {
     ): Promise<<%= h.capitalize(name) %>Response> {
         const <%=name%>Service = new <%= h.capitalize(name) %>Service();
         const query = {
-            name,
+            title,
             pageNumber,
             pageSize,
             filter,

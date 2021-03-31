@@ -108,10 +108,6 @@ public async get<%= h.capitalize(name) %>ByName(reqQuery: any): Promise<<%= h.ca
           order: [['createdAt', pageOptions.sortOrder]]
       });
 
-      if (!<%=name%>s) {
-          throw new ApiError(false,"<%= h.capitalize(name) %>NotFound",422,"cannot find <%=name%>");
-      }
-
       const listLength = await db.<%= h.capitalize(name) %>.count({where: query});
 
       return {<%=name%>s: <%=name%>s, listLength }
@@ -137,10 +133,6 @@ public async getAll<%= h.capitalize(name) %>s(reqQuery): Promise<<%= h.capitaliz
           order: [['createdAt', pageOptions.sortOrder]]
       });
 
-
-      if (!<%=name%>s) {
-          throw new ApiError(false,"<%= h.capitalize(name) %>NotFound",422,"cannot find <%=name%>");
-      }
 
       const listLength = await db.<%= h.capitalize(name) %>.count();
 
