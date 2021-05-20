@@ -13,7 +13,9 @@ export interface I<%= h.capitalize(name) %> extends Base {
 
 export interface ISafe<%= h.capitalize(name) %> extends Pick<I<%= h.capitalize(name) %>, "title" | "createdAt" | "updatedAt"> {}
 
-export interface <%= h.capitalize(name) %>Req extends Pick<I<%= h.capitalize(name) %>,"title"> {}
+export interface <%= h.capitalize(name) %>Req {
+  title?: string;
+}
 
 export interface <%= h.capitalize(name) %>Payload {
   <%=name%>?: ISafe<%= h.capitalize(name) %>;
