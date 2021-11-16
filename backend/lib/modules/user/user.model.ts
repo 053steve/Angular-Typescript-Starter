@@ -14,11 +14,11 @@ export default (sequelize, DataTypes) =>   {
             primaryKey: true
         },
 
-        firstName: {
+        firstname: {
             type: STRING,
         },
 
-        lastName: {
+        lastname: {
             type: STRING,
         },
 

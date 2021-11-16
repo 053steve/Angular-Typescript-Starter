@@ -10,9 +10,10 @@ passport.use('local', new Strategy({
 }, async (username, password, done) => {
   
   try {
-
+    
     const user: any = await db.User.findOne({ where: { username } });
-
+    
+    
     if (!user) {       
       return done(null, false, {message: 'Incorrect Username'}); 
     }

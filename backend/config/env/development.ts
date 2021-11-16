@@ -2,11 +2,11 @@ export default {
   token: 'laa-lee-loo-lae-loe',
   dbConfig: {
     host: "localhost",
-    username: "root",
+    username: "postgres",
     password: "root",
-    port: 3306,
+    port: 5432,
     database: "Test_Sql",
-    dialect: "mysql",
+    dialect: "postgres",
     pool: {
       max: 5,
       min: 0,
