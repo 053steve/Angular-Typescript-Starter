@@ -15,10 +15,10 @@
     "outputDirectory": "lib/swagger",
     "specVersion": 3,
     "securityDefinitions": {
-      "bearerAuth": {
-        "type": "apiKey",
-        "name": "authorization",
-        "in": "header"
+      "jwt": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
       }
     }
   },

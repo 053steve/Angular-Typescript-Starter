@@ -208,10 +208,10 @@
 			}
 		},
 		"securitySchemes": {
-			"bearerAuth": {
-				"type": "apiKey",
-				"name": "authorization",
-				"in": "header"
+			"jwt": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
 			}
 		}
 	},
