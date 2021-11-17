@@ -15,7 +15,7 @@ export function expressAuthentication(
         return new Promise((resolve, reject) => {
             const token = getToken(request);
             if(!token) {
-                reject(new ApiError(false,"NoAuthorization",422,"No Authorization"));
+                reject(new ApiError(false,"NoAuthorization",401,"No Authorization"));
             }
 
             let decoded = null;

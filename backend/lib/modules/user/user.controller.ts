@@ -22,7 +22,7 @@ import {USER_TYPE} from "../../constants";
 @Route("user")
 export class UserController {
 
-    // @Security("jwt")
+    @Security("jwt")
     @Get('search')
     @Tags('user')
     public async searchUser(
@@ -63,7 +63,7 @@ export class UserController {
         return userResponse;
     }
 
-    // @Security("jwt")
+    @Security("jwt")
     @Get('list')
     @Tags('user')
     public async getAllUsers(
@@ -85,7 +85,7 @@ export class UserController {
         return userResponse;
     }
 
-    // @Security("jwt")
+    @Security("jwt")
     @Get("detail/{userId}")
     @Tags('user')
     public async getUser(@Path() userId: string): Promise<UserResponse> {
@@ -102,7 +102,7 @@ export class UserController {
 
     }
 
-    // @Security("jwt")
+    @Security("jwt")
     @Put("update/{userId}")
     @Tags('user')
     public async updateUser(
@@ -125,7 +125,7 @@ export class UserController {
 
     }
 
-    // @Security("jwt")
+    @Security("jwt")
     @Delete("delete/{userId}")
     @Tags('user')
     public async deleteUser(
@@ -145,7 +145,7 @@ export class UserController {
     }
 
 
-    // @Security("jwt")
+    @Security("jwt")
     @Get("{user_type}")
     @Tags('user')
     public async getUserByUserType(
