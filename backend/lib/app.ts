@@ -4,9 +4,9 @@ import cors from 'cors';
 import config from '../config';
 import passport from 'passport';
 import * as swaggerUI from 'swagger-ui-express';
-import {db} from './db';
+import { db } from './db';
 import { RegisterRoutes } from '../lib/routes/routes';
-import {errorHandler} from "./middleware/errorHandling";
+import { errorHandler } from "./middleware/errorHandling";
 const swaggerJSON = require('./swagger/swagger.json');
 
 
@@ -24,8 +24,8 @@ class App {
         this.app.use(errorHandler); //error handler middleware
         this.setupSequalize();
 
-    }   
-    
+    }
+
     private config(): void {
 
         this.app.use(bodyParser.json({ limit: '5mb' }));
@@ -33,25 +33,25 @@ class App {
 
         // serving static files 
         // this.app.use(express.static('public')); 
-        this.app.use(cors())
 
+        this.app.use(cors());
     }
 
     private setupPassport(): void {
         this.app.use(passport.initialize());
         this.app.use(passport.session());
-        require('../config/passport');
+        require('./common/passport');
     }
 
     private setupSwagger(): void {
         this.app.use('/swagger.json', (req, res) => {
-           res.send(swaggerJSON);
+            res.send(swaggerJSON);
         });
         this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJSON));
     }
 
     private async setupSequalize(): Promise<void> {
-        await db.sequalize.sync({force: false});
+        await db.sequalize.sync({ force: false });
     }
 
 

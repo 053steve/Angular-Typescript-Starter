@@ -3,7 +3,9 @@ import { Request } from "express";
 
 
 export function getToken (req: Request) {
+    
     const authHeader = req.get('authorization');
+    
     if (!authHeader) {
       return null
     }

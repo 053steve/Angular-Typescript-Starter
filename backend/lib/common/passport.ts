@@ -1,5 +1,5 @@
 import passport from 'passport';
-import {db} from '../lib/db';
+import {db} from '../db';
 import { Strategy } from 'passport-local';
 
 

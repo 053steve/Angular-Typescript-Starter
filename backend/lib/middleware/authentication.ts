@@ -1,8 +1,8 @@
 import * as express from "express";
 import * as jwt from "jsonwebtoken";
-import {getToken} from "../common/utils/auth";
+import { getToken } from "../common/utils/auth";
 import config from "../../config";
-import {ApiError} from "../common/utils/apiError";
+import { ApiError } from "../common/utils/apiError";
 
 export function expressAuthentication(
     request: express.Request,
@@ -10,12 +10,13 @@ export function expressAuthentication(
     scopes?: string[]
 ): Promise<any> {
 
-
     if (securityName === "jwt") {
-        return new Promise((resolve, reject) => {
+        return new Promise((resolve) => {
+
             const token = getToken(request);
-            if(!token) {
-                reject(new ApiError(false,"NoAuthorization",401,"No Authorization"));
+
+            if (!token) {
+                return new ApiError(false, "NoAuthorization", 401, "No Authorization")
             }
 
             let decoded = null;
@@ -23,7 +24,7 @@ export function expressAuthentication(
                 decoded = jwt.verify(token, config.token);
                 resolve(decoded);
             } catch (error) {
-                reject(error);
+                throw new ApiError(false, error.name, 401, error.message);
             }
         });
     }
