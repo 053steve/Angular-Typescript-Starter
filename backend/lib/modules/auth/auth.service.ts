@@ -8,7 +8,7 @@ import { db } from '../../db';
 import config from '../../../config';
 import { bufferToHex } from 'ethereumjs-util';
 import { nonceGenerate } from '../../common/utils/auth';
-import { recoverPersonalSignature } from 'eth-sig-util';
+import { recoverPersonalSignature } from '@metamask/eth-sig-util';
 
 
 
@@ -98,7 +98,7 @@ export class AuthService {
             const msgBufferHex = bufferToHex(Buffer.from(msg, 'utf8'));
             const address = recoverPersonalSignature({
                 data: msgBufferHex,
-                sig: signature,
+                signature
             });
 
             // The signature verification is successful if the address found with

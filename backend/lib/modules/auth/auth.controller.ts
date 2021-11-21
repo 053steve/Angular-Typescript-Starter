@@ -10,7 +10,6 @@ import { AuthService } from './auth.service';
 
 import { AuthRequest, AuthResponses, AuthType } from "./auth.interface";
 import { ApiError } from "../../common/utils/apiError";
-import { UserResponse } from "../user/user.interface";
 import { validateAuthReq } from '../../common/utils/auth';
 
 
@@ -40,7 +39,7 @@ export class AuthController {
 
                     result = await new AuthService().authenticateWeb3(req);
                     break;
-                    
+
                 default:
                     throw new ApiError(false, "Login Error", 500, 'no auth type set');
             }
