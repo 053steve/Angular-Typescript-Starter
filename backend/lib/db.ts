@@ -1,4 +1,5 @@
 
+require('./patches/pgEnum-fix');
 import { Sequelize, DataType } from 'sequelize';
 import config from '../config';
 import {DB} from "./common/interfaces";
@@ -9,7 +10,7 @@ const capitalize = (s) => {
     return s.charAt(0).toUpperCase() + s.slice(1)
 }
 
-export const sequalize = new Sequelize(config.dbConfig.database, config.dbConfig.username, config.dbConfig.password,{
+export const sequelize = new Sequelize(config.dbConfig.database, config.dbConfig.username, config.dbConfig.password,{
     host: config.dbConfig.host,
     port: config.dbConfig.port,
     dialect: config.dbConfig.dialect,
@@ -30,10 +31,10 @@ const models = modelPaths.reduce((o ,path) => {
     const modelName = capitalize(splitLastPathArr[0]);
 
     const pathFormat = (process.env.NODE_ENV == 'production') ? `../../${path.substring(0, path.lastIndexOf('.'))}` : `../${path.substring(0, path.lastIndexOf('.'))}`
-    const importPath = sequalize.import(pathFormat);
+    const importPath = sequelize.import(pathFormat);
     
     return {...o, [modelName]: importPath}
-  }, 0)
+  }, 0);
 
 
 Object.keys(models).forEach((modelName) => {
@@ -44,7 +45,7 @@ Object.keys(models).forEach((modelName) => {
 
 export const db: DB = {
     ...models,
-    sequalize
+    sequelize
 }
 
 // export default db;

@@ -1,5 +1,5 @@
 import {INTEGER, STRING, ENUM} from "sequelize";
-// import {sequalize} from "../../db";
+// import {sequelize} from "../../db";
 import {ALL_USER_TYPE, USER_TYPE, USER_TYPE_ENUM} from "../../constants";
 import bcrypt from 'bcryptjs';
 import config from '../../../config';

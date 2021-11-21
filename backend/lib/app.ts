@@ -22,7 +22,7 @@ class App {
         this.setupSwagger();
         RegisterRoutes(this.app);
         this.app.use(errorHandler); //error handler middleware
-        this.setupSequalize();
+        this.setupsequelize();
 
     }
 
@@ -50,8 +50,9 @@ class App {
         this.app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerJSON));
     }
 
-    private async setupSequalize(): Promise<void> {
-        await db.sequalize.sync({ force: false });
+    private async setupsequelize(): Promise<void> {
+        await db.sequelize.sync({force: false, alter: true, logger:false});
+        // await db.sequelize.sync();
     }
 
 
