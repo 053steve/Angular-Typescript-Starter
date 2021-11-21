@@ -15,7 +15,7 @@ import * as express from 'express';
 import { UserService } from './user.service';
 
 import {ApiError} from "../../common/utils/apiError";
-import {UserCreateReq, UserPayload, UserResponse, UserUpdateReq} from "./user.interface";
+import {NonceReq, UserCreateReq, UserPayload, UserResponse, UserUpdateReq} from "./user.interface";
 import {USER_TYPE} from "../../constants";
 
 
@@ -47,6 +47,7 @@ export class UserController {
 
         return userResponse;
     }
+    
 
     @Post('create')
     @Tags('user')
@@ -59,7 +60,19 @@ export class UserController {
                 token: result.token
             }
         }
-        console.log('userResponse : >> ',userResponse);
+        return userResponse;
+    }
+
+
+    @Post('create/nonce')
+    @Tags('user')
+    public async getOrCreateNonce(@Body() requestBody: NonceReq): Promise<UserResponse> {
+
+        const payload: UserPayload = await new UserService().getOrCreateNonce(requestBody)
+        const userResponse: UserResponse = {
+            success: true,
+            payload
+        }
         return userResponse;
     }
 
@@ -90,7 +103,7 @@ export class UserController {
     @Tags('user')
     public async getUser(@Path() userId: string): Promise<UserResponse> {
 
-        const result: UserPayload = await new UserService().getUser(userId);
+        const result: UserPayload = await new UserService().getUserById(userId);
         const userResponse: UserResponse = {
             success: true,
             payload: {
@@ -111,7 +124,7 @@ export class UserController {
     ) :Promise<UserResponse> {
 
         const userService = new UserService();
-        const getUserResult: UserPayload = await userService.getUser(userId);
+        const getUserResult: UserPayload = await userService.getUserById(userId);
         const updatedUserResult = await userService.updateUser(getUserResult.user, user);
 
         const userResponse: UserResponse = {
@@ -133,7 +146,7 @@ export class UserController {
     ): Promise<UserResponse> {
 
         const userService = new UserService();
-        const getUserResult: UserPayload = await userService.getUser(userId);
+        const getUserResult: UserPayload = await userService.getUserById(userId);
         await userService.deleteUser(getUserResult.user);
 
         const userResponse: UserResponse = {

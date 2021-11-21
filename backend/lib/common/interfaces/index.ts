@@ -1,4 +1,4 @@
-import {ApiError} from "../utils/apiError";
+
 
 
 export interface TableOptions {
@@ -19,3 +19,4 @@ export interface DB {
     [key: string]: any;
 }
 
+export type Nullable<T> = T | null;

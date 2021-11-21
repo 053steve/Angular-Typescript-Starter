@@ -1,5 +1,5 @@
 export default {
-  token: 'laa-lee-loo-lae-loe',
+  secret: 'laa-lee-loo-lae-loe',
   dbConfig: {
     host: "localhost",
     username: "postgres",
@@ -13,7 +13,8 @@ export default {
       acquire: 30000,
       idle: 10000
     }
-  }
+  },
+  
   // s3Bucket: {
   //   ACCESS_KEY_ID: 'something',
   //   SECRET_ACCESS_KEY: 'something',

@@ -1,4 +1,4 @@
-import {FormatResponse} from "../../common/interfaces";
+import {FormatResponse, Nullable} from "../../common/interfaces";
 import {ALL_USER_TYPE, USER_TYPE, USER_TYPE_ENUM} from "../../constants";
 import {Base} from "../../common/interfaces/base";
 import {Model} from "sequelize";
@@ -14,9 +14,10 @@ export interface IUser extends Base, UserModel {
     lastname: string;
     username: string;
     password: string;
-    employee_no?: string;
     user_type: USER_TYPE
     email: string;
+    nonce: string;
+    publicKey: string;
 }
 
 
@@ -27,22 +28,29 @@ export interface UserPayload {
     users?: ISafeUser[];
     userLength?: number;
     token? : string;
+    nonce?: string;
+}
+export interface UserCreateReq {
+    firstname?: Nullable<string>;
+    lastname?: Nullable<string>;
+    username: string;
+    password: string;
+    user_type?: Nullable<USER_TYPE>
+    email: string;
 }
 
-export type UserCreateReq = Pick<IUser,"firstname" | "lastname" | "username" | "password" | "email" | "user_type">;
-
-
-type UserUpdateReqPick = Pick<IUser,"firstname" | "lastname" | "username" | "email">;
-
-
-export type UserUpdateReq = Omit<UserUpdateReqPick,"firstname" | "lastname" | "username" | "email"> & {
-    firstname?: string;
-    lastname?: string;
-    username?: string;
-    email?: string;
+export interface UserUpdateReq {
+    firstname?: Nullable<string>;
+    lastname?: Nullable<string>;
+    username: string;
+    password: string;
+    user_type?: Nullable<USER_TYPE>
+    email: string;
 }
 
-
+export interface NonceReq {
+    publicKey: string
+}
 export interface UserResponse extends FormatResponse {
     payload? : UserPayload
 }

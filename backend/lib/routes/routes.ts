@@ -36,11 +36,24 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "Nullable_string_": {
+        "dataType": "refAlias",
+        "type": {"dataType":"union","subSchemas":[{"dataType":"string"},{"dataType":"enum","enums":[null]}],"validators":{}},
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+    "AuthType": {
+        "dataType": "refEnum",
+        "enums": ["STANDARD","W3_WALLET"],
+    },
+    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "AuthRequest": {
         "dataType": "refObject",
         "properties": {
-            "username": {"dataType":"string","required":true},
-            "password": {"dataType":"string","required":true},
+            "username": {"ref":"Nullable_string_"},
+            "password": {"ref":"Nullable_string_"},
+            "authType": {"ref":"AuthType","required":true},
+            "signature": {"ref":"Nullable_string_"},
+            "publicKey": {"ref":"Nullable_string_"},
         },
         "additionalProperties": false,
     },
@@ -67,6 +80,7 @@ const models: TsoaRoute.Models = {
             "users": {"dataType":"array","array":{"dataType":"refAlias","ref":"ISafeUser"}},
             "userLength": {"dataType":"double"},
             "token": {"dataType":"string"},
+            "nonce": {"dataType":"string"},
         },
         "additionalProperties": false,
     },
@@ -81,29 +95,43 @@ const models: TsoaRoute.Models = {
         "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Pick_IUser.firstname-or-lastname-or-username-or-password-or-email-or-user_type_": {
+    "Nullable_USER_TYPE_": {
         "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{"firstname":{"dataType":"string","required":true},"lastname":{"dataType":"string","required":true},"username":{"dataType":"string","required":true},"email":{"dataType":"string","required":true},"user_type":{"ref":"USER_TYPE","required":true},"password":{"dataType":"string","required":true}},"validators":{}},
+        "type": {"dataType":"union","subSchemas":[{"ref":"USER_TYPE"},{"dataType":"enum","enums":[null]}],"validators":{}},
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "UserCreateReq": {
-        "dataType": "refAlias",
-        "type": {"ref":"Pick_IUser.firstname-or-lastname-or-username-or-password-or-email-or-user_type_","validators":{}},
+        "dataType": "refObject",
+        "properties": {
+            "firstname": {"ref":"Nullable_string_"},
+            "lastname": {"ref":"Nullable_string_"},
+            "username": {"dataType":"string","required":true},
+            "password": {"dataType":"string","required":true},
+            "user_type": {"ref":"Nullable_USER_TYPE_"},
+            "email": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Pick_UserUpdateReqPick.Exclude_keyofUserUpdateReqPick.firstname-or-lastname-or-username-or-email__": {
-        "dataType": "refAlias",
-        "type": {"dataType":"nestedObjectLiteral","nestedProperties":{},"validators":{}},
-    },
-    // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
-    "Omit_UserUpdateReqPick.firstname-or-lastname-or-username-or-email_": {
-        "dataType": "refAlias",
-        "type": {"ref":"Pick_UserUpdateReqPick.Exclude_keyofUserUpdateReqPick.firstname-or-lastname-or-username-or-email__","validators":{}},
+    "NonceReq": {
+        "dataType": "refObject",
+        "properties": {
+            "publicKey": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
     "UserUpdateReq": {
-        "dataType": "refAlias",
-        "type": {"dataType":"intersection","subSchemas":[{"ref":"Omit_UserUpdateReqPick.firstname-or-lastname-or-username-or-email_"},{"dataType":"nestedObjectLiteral","nestedProperties":{"email":{"dataType":"string"},"username":{"dataType":"string"},"lastname":{"dataType":"string"},"firstname":{"dataType":"string"}}}],"validators":{}},
+        "dataType": "refObject",
+        "properties": {
+            "firstname": {"ref":"Nullable_string_"},
+            "lastname": {"ref":"Nullable_string_"},
+            "username": {"dataType":"string","required":true},
+            "password": {"dataType":"string","required":true},
+            "user_type": {"ref":"Nullable_USER_TYPE_"},
+            "email": {"dataType":"string","required":true},
+        },
+        "additionalProperties": false,
     },
     // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
 };
@@ -189,6 +217,28 @@ export function RegisterRoutes(app: express.Router) {
 
 
             const promise = controller.createUser.apply(controller, validatedArgs as any);
+            promiseHandler(controller, promise, response, next);
+        });
+        // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+        app.post('/user/create/nonce',
+            function (request: any, response: any, next: any) {
+            const args = {
+                    requestBody: {"in":"body","name":"requestBody","required":true,"ref":"NonceReq"},
+            };
+
+            // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa
+
+            let validatedArgs: any[] = [];
+            try {
+                validatedArgs = getValidatedArgs(args, request, response);
+            } catch (err) {
+                return next(err);
+            }
+
+            const controller = new UserController();
+
+
+            const promise = controller.getOrCreateNonce.apply(controller, validatedArgs as any);
             promiseHandler(controller, promise, response, next);
         });
         // WARNING: This file was auto-generated with tsoa. Please do not modify it. Re-run tsoa to re-generate this file: https://github.com/lukeautry/tsoa

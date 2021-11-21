@@ -39,6 +39,14 @@ export default (sequelize, DataTypes) =>   {
         email: {
             type: STRING,
             unique: true
+        },
+
+        nonce: {
+            type: STRING,
+        },
+
+        publicKey: {
+            type: STRING,
         }
     },{
         timestamp: true
@@ -63,9 +71,9 @@ export default (sequelize, DataTypes) =>   {
         return isMatch;
     }
 
-    User.prototype.generateToken = () => {
+    User.prototype.generateToken = (expiresIn = '1h') => {
         const user: any = this;
-        return jwt.sign({ id: user.id }, config.token, { expiresIn: '1h' });
+        return jwt.sign({ id: user.id }, config.secret, { expiresIn });
     }
 
 

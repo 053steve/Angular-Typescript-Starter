@@ -1,8 +1,9 @@
 
 import {db} from '../../db';
 import {ApiError} from "../../common/utils/apiError";
-import {ISafeUser, IUser, UserPayload, UserUpdateReq} from "./user.interface";
+import {IUser, NonceReq, UserPayload, UserUpdateReq} from "./user.interface";
 import Sequelize from "sequelize";
+import {nonceGenerate} from '../../common/utils/auth';
 
 const Op = Sequelize.Op;
 
@@ -32,7 +33,7 @@ export class UserService {
     }
 
 
-    public async getUser(userId): Promise<UserPayload>  {
+    public async getUserById(userId): Promise<UserPayload>  {
 
         let user: any;
 
@@ -55,6 +56,34 @@ export class UserService {
             }
 
             throw new ApiError(false,"UserNotFound",422,"something wrong while getting user");
+        }
+
+    }
+
+    public async getOrCreateNonce(userReq: NonceReq): Promise<UserPayload>  {
+
+        let nonce;
+
+        try {
+
+            const foundUser = await db.User.findOne({where: {publicKey: userReq.publicKey}, attributes: { exclude: ['password']}});
+            
+            if (!foundUser) {
+
+                const createdUser = await db.User.create({
+                    publicKey: userReq.publicKey,
+                    nonce: nonceGenerate()
+                });
+
+                nonce = createdUser.nonce;
+            }
+
+            nonce = foundUser.nonce;
+
+            return { nonce };
+
+        } catch (err) {
+            throw new ApiError(false,"GetNonce",err.code, err.message);
         }
 
     }

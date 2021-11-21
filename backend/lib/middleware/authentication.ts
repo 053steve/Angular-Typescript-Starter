@@ -21,7 +21,7 @@ export function expressAuthentication(
 
             let decoded = null;
             try {
-                decoded = jwt.verify(token, config.token);
+                decoded = jwt.verify(token, config.secret);
                 resolve(decoded);
             } catch (error) {
                 throw new ApiError(false, error.name, 401, error.message);

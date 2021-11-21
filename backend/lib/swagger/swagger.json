@@ -38,18 +38,37 @@
 				"type": "object",
 				"additionalProperties": false
 			},
+			"Nullable_string_": {
+				"type": "string",
+				"nullable": true
+			},
+			"AuthType": {
+				"enum": [
+					"STANDARD",
+					"W3_WALLET"
+				],
+				"type": "string"
+			},
 			"AuthRequest": {
 				"properties": {
 					"username": {
-						"type": "string"
+						"$ref": "#/components/schemas/Nullable_string_"
 					},
 					"password": {
-						"type": "string"
+						"$ref": "#/components/schemas/Nullable_string_"
+					},
+					"authType": {
+						"$ref": "#/components/schemas/AuthType"
+					},
+					"signature": {
+						"$ref": "#/components/schemas/Nullable_string_"
+					},
+					"publicKey": {
+						"$ref": "#/components/schemas/Nullable_string_"
 					}
 				},
 				"required": [
-					"username",
-					"password"
+					"authType"
 				],
 				"type": "object",
 				"additionalProperties": false
@@ -118,6 +137,9 @@
 					},
 					"token": {
 						"type": "string"
+					},
+					"nonce": {
+						"type": "string"
 					}
 				},
 				"type": "object",
@@ -139,73 +161,83 @@
 				"type": "object",
 				"additionalProperties": false
 			},
-			"Pick_IUser.firstname-or-lastname-or-username-or-password-or-email-or-user_type_": {
+			"Nullable_USER_TYPE_": {
+				"allOf": [
+					{
+						"$ref": "#/components/schemas/USER_TYPE"
+					}
+				],
+				"nullable": true
+			},
+			"UserCreateReq": {
 				"properties": {
 					"firstname": {
-						"type": "string"
+						"$ref": "#/components/schemas/Nullable_string_"
 					},
 					"lastname": {
-						"type": "string"
+						"$ref": "#/components/schemas/Nullable_string_"
 					},
 					"username": {
 						"type": "string"
 					},
-					"email": {
+					"password": {
 						"type": "string"
 					},
 					"user_type": {
-						"$ref": "#/components/schemas/USER_TYPE"
+						"$ref": "#/components/schemas/Nullable_USER_TYPE_"
 					},
-					"password": {
+					"email": {
 						"type": "string"
 					}
 				},
 				"required": [
-					"firstname",
-					"lastname",
 					"username",
-					"email",
-					"user_type",
-					"password"
+					"password",
+					"email"
 				],
 				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
+				"additionalProperties": false
 			},
-			"UserCreateReq": {
-				"$ref": "#/components/schemas/Pick_IUser.firstname-or-lastname-or-username-or-password-or-email-or-user_type_"
-			},
-			"Pick_UserUpdateReqPick.Exclude_keyofUserUpdateReqPick.firstname-or-lastname-or-username-or-email__": {
-				"properties": {},
+			"NonceReq": {
+				"properties": {
+					"publicKey": {
+						"type": "string"
+					}
+				},
+				"required": [
+					"publicKey"
+				],
 				"type": "object",
-				"description": "From T, pick a set of properties whose keys are in the union K"
-			},
-			"Omit_UserUpdateReqPick.firstname-or-lastname-or-username-or-email_": {
-				"$ref": "#/components/schemas/Pick_UserUpdateReqPick.Exclude_keyofUserUpdateReqPick.firstname-or-lastname-or-username-or-email__",
-				"description": "Construct a type with the properties of T except for those in type K."
+				"additionalProperties": false
 			},
 			"UserUpdateReq": {
-				"allOf": [
-					{
-						"$ref": "#/components/schemas/Omit_UserUpdateReqPick.firstname-or-lastname-or-username-or-email_"
+				"properties": {
+					"firstname": {
+						"$ref": "#/components/schemas/Nullable_string_"
 					},
-					{
-						"properties": {
-							"email": {
-								"type": "string"
-							},
-							"username": {
-								"type": "string"
-							},
-							"lastname": {
-								"type": "string"
-							},
-							"firstname": {
-								"type": "string"
-							}
-						},
-						"type": "object"
+					"lastname": {
+						"$ref": "#/components/schemas/Nullable_string_"
+					},
+					"username": {
+						"type": "string"
+					},
+					"password": {
+						"type": "string"
+					},
+					"user_type": {
+						"$ref": "#/components/schemas/Nullable_USER_TYPE_"
+					},
+					"email": {
+						"type": "string"
 					}
-				]
+				},
+				"required": [
+					"username",
+					"password",
+					"email"
+				],
+				"type": "object",
+				"additionalProperties": false
 			}
 		},
 		"securitySchemes": {
@@ -380,6 +412,38 @@
 						"application/json": {
 							"schema": {
 								"$ref": "#/components/schemas/UserCreateReq"
+							}
+						}
+					}
+				}
+			}
+		},
+		"/user/create/nonce": {
+			"post": {
+				"operationId": "GetOrCreateNonce",
+				"responses": {
+					"200": {
+						"description": "Ok",
+						"content": {
+							"application/json": {
+								"schema": {
+									"$ref": "#/components/schemas/UserResponse"
+								}
+							}
+						}
+					}
+				},
+				"tags": [
+					"user"
+				],
+				"security": [],
+				"parameters": [],
+				"requestBody": {
+					"required": true,
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/components/schemas/NonceReq"
 							}
 						}
 					}
