@@ -58,7 +58,8 @@
 				"type": "string",
 				"enum": [
 					"ADMIN",
-					"STAFF"
+					"STAFF",
+					"USER"
 				]
 			},
 			"Pick_IUser.firstname-or-lastname-or-username-or-email-or-user_type-or-createdAt-or-updatedAt_": {

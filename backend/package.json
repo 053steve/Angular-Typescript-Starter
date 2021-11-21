@@ -9,7 +9,7 @@
     "dev": "nodemon",
     "start": "npm run preprocess && ts-node ./dist/lib/local.js",
     "offline": "sls offline start --useSeparateProcesses",
-    "tsoa:gen": "node node_modules/tsoa/dist/cli.js spec-and-routes --verbose --ignore '*/routes/*.ts",
+    "tsoa:gen": "node node_modules/tsoa/dist/cli.js spec-and-routes",
     "preprocess": "npm run tsoa:gen",
     "build": "tsc",
     "clean": "rm -rf dist/*",

@@ -25,17 +25,15 @@ export default (sequelize, DataTypes) =>   {
         username: {
             type: STRING,
             unique: true,
-            allowNull: false
         },
 
         password: {
             type: STRING,
-            allowNull: false
         },
 
         user_type: {
             type: ENUM(...Object.keys(USER_TYPE_ENUM)),
-            defaultValue: USER_TYPE_ENUM.STAFF
+            defaultValue: USER_TYPE_ENUM.USER
         },
 
         email: {
