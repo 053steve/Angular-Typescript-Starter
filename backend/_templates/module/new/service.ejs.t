@@ -22,8 +22,8 @@ export class <%= h.capitalize(name) %>Service {
       new<%= h.capitalize(name) %> = await db.<%= h.capitalize(name) %>.create(<%=name%>);
 
     } catch (err) {
-        console.log(err);
-        throw new ApiError(false, "SaveError",422, err.message, err.code);
+
+        throw new ApiError(false, "SaveError",err?.code, err?.message);
     }
     return { <%=name%>: new<%= h.capitalize(name) %> };
 }
@@ -43,7 +43,7 @@ public async update<%= h.capitalize(name) %>(<%=name%>: any, update<%= h.capital
       return { <%=name%> };
 
   } catch (err) {
-      throw new ApiError(false,"<%= h.capitalize(name) %>ServiceError",422,"cannot save <%=name%>");
+      throw new ApiError(false, ""<%= h.capitalize(name) %>SaveError",err?.code, err?.message);
   }
 }
 
@@ -62,12 +62,7 @@ public async get<%= h.capitalize(name) %>(<%=name%>Id): Promise<<%= h.capitalize
 
   } catch (err) {
 
-      if (err === 404 || err.name === 'CastError') {
-          throw new ApiError(false,"CastError",404,"cast error");
-
-      }
-
-      throw new ApiError(false,"<%= h.capitalize(name) %>NotFound",422,"something wrong while getting <%=name%>");
+      throw new ApiError(false, ""<%= h.capitalize(name) %>SaveError",err?.code, err?.message);
   }
 
 }
@@ -82,7 +77,7 @@ public async delete<%= h.capitalize(name) %>(<%=name%>: any): Promise<<%= h.capi
       return { <%=name%> };
 
   } catch (err) {
-      throw new ApiError(false,"<%= h.capitalize(name) %>ServiceError",422,"cannot delete <%=name%>");
+      throw new ApiError(false, ""<%= h.capitalize(name) %>SaveError",err?.code, err?.message);
   }
 
 }
@@ -112,7 +107,7 @@ public async get<%= h.capitalize(name) %>ByName(reqQuery: any): Promise<<%= h.ca
 
       return {<%=name%>s: <%=name%>s, listLength }
   } catch (err) {
-      throw new ApiError(false,"<%= h.capitalize(name) %>ServiceError",422,"cannot get <%=name%>");
+      throw new ApiError(false, ""<%= h.capitalize(name) %>SaveError",err?.code, err?.message);
   }
 }
 
@@ -144,7 +139,7 @@ public async getAll<%= h.capitalize(name) %>s(reqQuery): Promise<<%= h.capitaliz
           throw new ApiError(false,"<%= h.capitalize(name) %>NotFound",404,"CastError");
       }
 
-      throw new ApiError(false,"<%= h.capitalize(name) %>NotFound",422,"something wrong while getting <%=name%>");
+      throw new ApiError(false, ""<%= h.capitalize(name) %>SaveError",err?.code, err?.message);
   }
 }
 

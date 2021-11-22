@@ -65,7 +65,7 @@ export class UserService {
         let nonce;
 
         try {
-
+            
             const foundUser = await db.User.findOne({where: {publicKey: userReq.publicKey}, attributes: { exclude: ['password']}});
             
             if (!foundUser) {
@@ -76,14 +76,14 @@ export class UserService {
                 });
 
                 nonce = createdUser.nonce;
+            } else {
+                nonce = foundUser.nonce;
             }
-
-            nonce = foundUser.nonce;
 
             return { nonce };
 
         } catch (err) {
-            throw new ApiError(false,"GetNonce",err.code, err.message);
+            throw new ApiError(false,"GetNonce",err?.code, err?.message);
         }
 
     }

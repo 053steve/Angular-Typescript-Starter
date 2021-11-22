@@ -55,14 +55,18 @@ export default (sequelize, DataTypes) =>   {
 
 
     User.beforeCreate( async (user, options) => {
-        if (!user.username) {    // If dont have username get username from email
+        if (!user.username && user.email) {    // If dont have username get username from email
             const splitEmail = user.email.split('@');
             const userName = splitEmail[0];
             user.username = userName;
         }
 
-        const salt = await bcrypt.genSalt(10);
-        user.password = await bcrypt.hash(user.password, salt);
+        if(user.password) {
+            const salt = await bcrypt.genSalt(10);
+            user.password = await bcrypt.hash(user.password, salt);
+        }
+
+        
     });
 
 
