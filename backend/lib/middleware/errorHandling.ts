@@ -4,9 +4,7 @@ import {ValidateError} from "tsoa";
 
 export const errorHandler = (err: any, req: Request, res: Response, next: NextFunction) => {
     if (err instanceof ApiError) {
-        // console.log('err');
-        // console.log(err);
-
+        
         return res.status(err.status).json({
             name: err.name,
             status: err.status,

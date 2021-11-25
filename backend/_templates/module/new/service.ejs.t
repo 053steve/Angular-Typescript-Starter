@@ -22,7 +22,7 @@ export class <%= h.capitalize(name) %>Service {
       new<%= h.capitalize(name) %> = await db.<%= h.capitalize(name) %>.create(<%=name%>);
 
     } catch (err) {
-
+        err.code = err.code || 422;
         throw new ApiError(false, "SaveError",err?.code, err?.message);
     }
     return { <%=name%>: new<%= h.capitalize(name) %> };
@@ -43,6 +43,7 @@ public async update<%= h.capitalize(name) %>(<%=name%>: any, update<%= h.capital
       return { <%=name%> };
 
   } catch (err) {
+      err.code = err.code || 422;
       throw new ApiError(false, ""<%= h.capitalize(name) %>SaveError",err?.code, err?.message);
   }
 }
@@ -61,7 +62,7 @@ public async get<%= h.capitalize(name) %>(<%=name%>Id): Promise<<%= h.capitalize
       return { <%=name%> };
 
   } catch (err) {
-
+      err.code = err.code || 422;
       throw new ApiError(false, ""<%= h.capitalize(name) %>SaveError",err?.code, err?.message);
   }
 
@@ -77,6 +78,7 @@ public async delete<%= h.capitalize(name) %>(<%=name%>: any): Promise<<%= h.capi
       return { <%=name%> };
 
   } catch (err) {
+      err.code = err.code || 422;
       throw new ApiError(false, ""<%= h.capitalize(name) %>SaveError",err?.code, err?.message);
   }
 
@@ -107,6 +109,7 @@ public async get<%= h.capitalize(name) %>ByName(reqQuery: any): Promise<<%= h.ca
 
       return {<%=name%>s: <%=name%>s, listLength }
   } catch (err) {
+      err.code = err.code || 422;
       throw new ApiError(false, ""<%= h.capitalize(name) %>SaveError",err?.code, err?.message);
   }
 }
@@ -138,6 +141,8 @@ public async getAll<%= h.capitalize(name) %>s(reqQuery): Promise<<%= h.capitaliz
       if (err === 404 || err.name === 'CastError') {
           throw new ApiError(false,"<%= h.capitalize(name) %>NotFound",404,"CastError");
       }
+
+      err.code = err.code || 422;
 
       throw new ApiError(false, ""<%= h.capitalize(name) %>SaveError",err?.code, err?.message);
   }

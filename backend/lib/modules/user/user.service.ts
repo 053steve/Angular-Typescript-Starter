@@ -83,6 +83,9 @@ export class UserService {
             return { nonce };
 
         } catch (err) {
+
+            err.code = err.code || 422;
+
             throw new ApiError(false,"GetNonce",err?.code, err?.message);
         }
 
