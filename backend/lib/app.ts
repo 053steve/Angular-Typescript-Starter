@@ -34,6 +34,7 @@ class App {
         // serving static files 
         // this.app.use(express.static('public')); 
 
+
         this.app.use(cors());
     }
 
@@ -51,8 +52,8 @@ class App {
     }
 
     private async setupsequelize(): Promise<void> {
-        // await db.sequelize.sync({force: false, alter: true, logger:false});
-        await db.sequelize.sync();
+        await db.sequelize.sync({force: false, alter: true, logger:false});
+        // await db.sequelize.sync();
     }
 
 

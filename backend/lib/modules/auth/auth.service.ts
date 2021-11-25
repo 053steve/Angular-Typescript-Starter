@@ -124,6 +124,8 @@ export class AuthService {
 
 
         } catch (err) {
+            
+            err.code = err.code || 422;
             throw new ApiError(false, "AuthWeb3", err.code, err.message);
         }
 
