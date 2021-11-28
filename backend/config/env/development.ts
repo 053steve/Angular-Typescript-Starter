@@ -1,5 +1,6 @@
 export default {
   secret: 'laa-lee-loo-lae-loe',
+  nonce_msg: 'Signing one-time nonce: ',
   dbConfig: {
     host: "localhost",
     username: "postgres",

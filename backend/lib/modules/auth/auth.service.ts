@@ -91,7 +91,7 @@ export class AuthService {
                 throw new ApiError(false, "AuthWeb3", 401, 'user not found');
             }
 
-            const msg = `${config.secret}-${foundUser.nonce}`;
+            const msg = `${config.nonce_msg}${foundUser.nonce}`;
 
             // We now are in possession of msg, publicAddress and signature. We
             // will use a helper from eth-sig-util to extract the address from the signature
