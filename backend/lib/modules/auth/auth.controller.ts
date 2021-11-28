@@ -1,16 +1,10 @@
-import {
-    Body,
-    Post,
-    Route,
-    Request,
-    Tags,
-} from "tsoa";
+import {Body, Post, Request, Route, Tags,} from "tsoa";
 
-import { AuthService } from './auth.service';
+import {AuthService} from './auth.service';
 
-import { AuthRequest, AuthResponses, AuthType } from "./auth.interface";
-import { ApiError } from "../../common/utils/apiError";
-import { validateAuthReq } from '../../common/utils/auth';
+import {AuthRequest, AuthResponses, AuthType} from "./auth.interface";
+import {ApiError} from "../../common/utils/apiError";
+import {validateAuthReq} from '../../common/utils/auth';
 
 
 @Route("auth")
@@ -32,28 +26,27 @@ export class AuthController {
             switch (authType) {
                 case AuthType.STANDARD:
 
-                    result = await new AuthService().authenticate(req);
+                    result = await new AuthService().authenticate(requestBody);
                     break;
 
                 case AuthType.W3_WALLET:
 
-                    result = await new AuthService().authenticateWeb3(req);
+                    result = await new AuthService().authenticateWeb3(requestBody);
                     break;
 
                 default:
                     throw new ApiError(false, "Login Error", 500, 'no auth type set');
             }
 
-            const auth: AuthResponses = {
+            return {
                 success: true,
                 payload: {
                     user: result.user,
                     token: result.token
                 }
-            }
-            return auth;
+            };
         } catch (err) {
-            throw new ApiError(false, "Login Error", err.code, err.message);
+            throw new ApiError(false, "Login Error", err.status, err.message);
         }
 
     }

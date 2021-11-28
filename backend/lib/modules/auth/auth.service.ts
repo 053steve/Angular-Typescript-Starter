@@ -110,8 +110,9 @@ export class AuthService {
             // generate new nonce for user, security shit for next login
             await db.User.update({nonce: nonceGenerate()}, {where: {id: foundUser.id}});
 
+            const token = foundUser.generateToken();
             const user = foundUser.toJSON();
-            const token = user.generateToken();
+
             
             delete user.password;
 
@@ -124,9 +125,9 @@ export class AuthService {
 
 
         } catch (err) {
-            
-            err.code = err.code || 422;
-            throw new ApiError(false, "AuthWeb3", err.code, err.message);
+
+            err.status = err.status || 422;
+            throw new ApiError(false, "AuthWeb3", err.status, err.message);
         }
 
     }

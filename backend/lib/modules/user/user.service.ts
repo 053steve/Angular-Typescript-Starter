@@ -84,9 +84,9 @@ export class UserService {
 
         } catch (err) {
 
-            err.code = err.code || 422;
+            err.status = err.status || 422;
 
-            throw new ApiError(false,"GetNonce",err?.code, err?.message);
+            throw new ApiError(false,"GetNonce",err?.status, err?.message);
         }
 
     }
